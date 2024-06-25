@@ -61,6 +61,7 @@ const studentSchema = new Schema<TStudent>(
     permanentAddress: { type: String, required: true },
     guardian: guardianSchema,
     localGuardian: localGuardianSchema,
+    admissionSemester:{type:Schema.Types.ObjectId,required:true,ref:'AcademicSemester'},
     profileImg: String,
     isDeleted: { type: Boolean, required: true },
   },

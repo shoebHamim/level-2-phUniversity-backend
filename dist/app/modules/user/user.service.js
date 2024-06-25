@@ -15,13 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.userServices = void 0;
 const student_model_1 = __importDefault(require("../student/student.model"));
 const user_model_1 = __importDefault(require("./user.model"));
+const user_utils_1 = __importDefault(require("./user.utils"));
 const createStudentIntoDB = (password, studentData) => __awaiter(void 0, void 0, void 0, function* () {
-    let id = Math.floor(10000000 + Math.random() * 90000000);
+    const id = yield user_utils_1.default.createStudentId(studentData.admissionSemester);
     let newUser = {
-        id: id.toString(), // using static for the time being
-        password: password || 'default pass', // for the time being
-        role: 'student',
-        status: 'in-progress'
+        id: id.toString(), // using this for the time being
+        password: password || "default pass", // for the time being
+        role: "student",
+        status: "in-progress",
     };
     const result = yield user_model_1.default.create(newUser);
     if (Object.keys(result).length) {

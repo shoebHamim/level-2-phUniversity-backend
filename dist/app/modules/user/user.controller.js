@@ -12,18 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userController = void 0;
+exports.userControllers = void 0;
 const user_service_1 = require("./user.service");
-const student_validation_1 = require("../student/student.validation");
 const sendResponse_1 = __importDefault(require("../../utils/sendResponse"));
 const http_status_1 = __importDefault(require("http-status"));
 const catchAsync_1 = require("../../utils/catchAsync");
 // controllers
 const createStudent = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { password, student: studentData } = req.body;
-    // validate
-    const zodParsedData = student_validation_1.StudentValidationSchema.parse(studentData);
-    const result = yield user_service_1.userServices.createStudentIntoDB(password, zodParsedData);
+    const result = yield user_service_1.userServices.createStudentIntoDB(password, studentData);
     (0, sendResponse_1.default)(res, {
         data: result,
         message: "Student created successfully",
@@ -31,6 +28,6 @@ const createStudent = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 
         success: true,
     });
 }));
-exports.userController = {
+exports.userControllers = {
     createStudent,
 };

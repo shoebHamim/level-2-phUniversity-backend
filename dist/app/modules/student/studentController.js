@@ -22,7 +22,7 @@ const getAllStudent = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 
     (0, sendResponse_1.default)(res, {
         data: allStudents,
         success: true,
-        message: "all student fetched",
+        message: `all students[${allStudents.length}] fetched`,
         statusCode: http_status_1.default.OK,
     });
 }));

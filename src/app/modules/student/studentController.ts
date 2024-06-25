@@ -9,7 +9,7 @@ const getAllStudent = catchAsync(async (req, res) => {
   sendResponse(res, {
     data: allStudents,
     success: true,
-    message: "all student fetched",
+    message: `all students[${allStudents.length}] fetched`,
     statusCode: httpStatus.OK,
   });
 });

@@ -42,6 +42,7 @@ const studentSchema = new mongoose_1.Schema({
     permanentAddress: { type: String, required: true },
     guardian: guardianSchema,
     localGuardian: localGuardianSchema,
+    admissionSemester: { type: mongoose_1.Schema.Types.ObjectId, required: true, ref: 'AcademicSemester' },
     profileImg: String,
     isDeleted: { type: Boolean, required: true },
 }, { timestamps: true });
