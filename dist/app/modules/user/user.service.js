@@ -13,24 +13,46 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.userServices = void 0;
+const mongoose_1 = __importDefault(require("mongoose"));
 const student_model_1 = __importDefault(require("../student/student.model"));
 const user_model_1 = __importDefault(require("./user.model"));
 const user_utils_1 = __importDefault(require("./user.utils"));
+const AppError_1 = require("../../errors/AppError");
 const createStudentIntoDB = (password, studentData) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = yield user_utils_1.default.createStudentId(studentData.admissionSemester);
-    let newUser = {
-        id: id.toString(), // using this for the time being
-        password: password || "default pass", // for the time being
-        role: "student",
-        status: "in-progress",
-    };
-    const result = yield user_model_1.default.create(newUser);
-    if (Object.keys(result).length) {
-        studentData.id = result.id; // embedded id
-        studentData.user = result._id; // reference id
+    const session = yield mongoose_1.default.startSession();
+    try {
+        session.startTransaction();
+        const id = yield user_utils_1.default.createStudentId(studentData.admissionSemester);
+        //transaction -1
+        let newUser = {
+            id: id.toString(), // using this for the time being
+            password: password || "default pass", // for the time being
+            role: "student",
+            status: "in-progress",
+        };
+        const result = yield user_model_1.default.create([newUser], { session });
+        if (!result.length) {
+            throw new AppError_1.AppError(400, "failed to create user");
+        }
+        else {
+            studentData.id = result[0].id; // embedded id
+            studentData.user = result[0]._id; // reference id
+        }
+        //transaction-2
+        const newStudent = yield student_model_1.default.create([studentData], { session });
+        if (!newStudent) {
+            throw new AppError_1.AppError(400, "failed to create user");
+        }
+        // success!
+        yield session.commitTransaction();
+        yield session.endSession();
+        return newStudent;
     }
-    const newStudent = yield student_model_1.default.create(studentData);
-    return newStudent;
+    catch (err) {
+        yield session.abortTransaction();
+        yield session.endSession();
+        throw new AppError_1.AppError(500, err.toString());
+    }
 });
 exports.userServices = {
     createStudentIntoDB,

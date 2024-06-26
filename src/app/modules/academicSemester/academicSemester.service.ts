@@ -1,10 +1,14 @@
+import { AppError } from "../../errors/AppError";
 import { academicSemesterNameCodeMapper } from "./academicSemester.constant";
 import { TAcademicSemester } from "./academicSemester.interface";
 import AcademicSemesterModel from "./academicSemester.model";
 
+
+
+
 const createAcademicSemesterIntoDB = async (payLoad: TAcademicSemester) => {
   if (academicSemesterNameCodeMapper[payLoad.name] !== payLoad.code) {
-    throw new Error("Academic Semester and code does not match");
+    throw new AppError(400,"Academic Semester and code does not match");
   }
 
   const result = await AcademicSemesterModel.create(payLoad);
@@ -26,6 +30,7 @@ const updateAcademicSemester=async(id:string,updatedData:TAcademicSemester)=>{
   }
   return await AcademicSemesterModel.findByIdAndUpdate(id,updatedData);
 }
+
 
 
 

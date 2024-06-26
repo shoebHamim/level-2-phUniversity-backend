@@ -35,22 +35,27 @@ const getSingleStudent = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(vo
         statusCode: http_status_1.default.OK,
     });
 }));
-// const deleteSingleStudent = async (req: Request, res: Response) => {
-//   try {
-//     const singleStudent = await StudentServices.deleteSingleStudentFromDB(
-//       req.params.id
-//     );
-//     res.status(200).json({
-//       success: true,
-//       message: `${req.params.id} student is deleted`,
-//       data: singleStudent,
-//     });
-//   } catch (err) {
-//     // console.log(err);
-//     res.send(err);
-//   }
-// };
+const deleteSingleStudent = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield student_service_1.studentServices.deleteStudentFromDB(req.params.id);
+    (0, sendResponse_1.default)(res, {
+        data: result,
+        success: true,
+        message: "single student deleted",
+        statusCode: http_status_1.default.OK,
+    });
+}));
+const updateStudent = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield student_service_1.studentServices.updateStudentIntoDB(req.params.id, req.body.student);
+    (0, sendResponse_1.default)(res, {
+        data: result,
+        success: true,
+        message: "Student update successfully",
+        statusCode: http_status_1.default.OK,
+    });
+}));
 exports.StudentController = {
     getAllStudent,
     getSingleStudent,
+    deleteSingleStudent,
+    updateStudent
 };

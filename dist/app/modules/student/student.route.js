@@ -1,9 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.studentRoutes = void 0;
+const student_validation_1 = require("./student.validation");
+const validateRequest_1 = require("./../../middleware/validateRequest");
 const express_1 = require("express");
 const studentController_1 = require("./studentController");
 const router = (0, express_1.Router)();
 router.get('/all-student', studentController_1.StudentController.getAllStudent);
 router.get('/:id', studentController_1.StudentController.getSingleStudent);
+router.delete('/:id', studentController_1.StudentController.deleteSingleStudent);
+router.put('/:id', (0, validateRequest_1.validateRequest)(student_validation_1.updateStudentValidationSchema), studentController_1.StudentController.updateStudent);
 exports.studentRoutes = router;

@@ -43,6 +43,7 @@ const studentSchema = new mongoose_1.Schema({
     guardian: guardianSchema,
     localGuardian: localGuardianSchema,
     admissionSemester: { type: mongoose_1.Schema.Types.ObjectId, required: true, ref: 'AcademicSemester' },
+    academicDepartment: { type: mongoose_1.Schema.Types.ObjectId, required: true, ref: 'AcademicDepartment' },
     profileImg: String,
     isDeleted: { type: Boolean, required: true },
 }, { timestamps: true });
