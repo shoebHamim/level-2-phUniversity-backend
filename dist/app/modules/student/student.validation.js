@@ -40,7 +40,7 @@ exports.createStudentValidationSchema = zod_1.z.object({
     student: zod_1.z.object({
         name: TUserNameSchema,
         gender: zod_1.z.enum(["male", "female", "other"], {
-            message: "Gender must be 'male', 'female', or 'other'",
+            required_error: "Gender is required",
         }),
         dateOfBirth: zod_1.z.string().optional(),
         email: zod_1.z.string().email({ message: "Invalid email format" }),

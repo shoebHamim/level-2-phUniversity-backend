@@ -12,9 +12,12 @@ app.use(cors());
 // routes
 app.use("/api/v1/", router);
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("ph uni root path");
-});
+const test=async(req:Request,res:Response)=>{
+  Promise.reject()
+}
+
+
+app.get("/", test);
 
 //  middlewares
 app.use(globalErrorHandler);

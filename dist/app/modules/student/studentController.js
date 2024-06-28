@@ -18,7 +18,7 @@ const catchAsync_1 = require("../../utils/catchAsync");
 const sendResponse_1 = __importDefault(require("../../utils/sendResponse"));
 const http_status_1 = __importDefault(require("http-status"));
 const getAllStudent = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const allStudents = yield student_service_1.studentServices.getAllStudentsFromDB();
+    const allStudents = yield student_service_1.studentServices.getAllStudentsFromDB(req.query);
     (0, sendResponse_1.default)(res, {
         data: allStudents,
         success: true,
@@ -57,5 +57,5 @@ exports.StudentController = {
     getAllStudent,
     getSingleStudent,
     deleteSingleStudent,
-    updateStudent
+    updateStudent,
 };

@@ -1,6 +1,7 @@
 import { Types } from "mongoose";
 import AcademicSemesterModel from "../academicSemester/academicSemester.model";
 import StudentModel from "../student/student.model";
+import { FacultyModel } from "../faculty/faculty.Model";
 
 const findLastStudentIdCountPart = async (admissionSemId: Types.ObjectId) => {
   const last_student = await StudentModel.findOne({
@@ -30,4 +31,12 @@ const createStudentId = async (admissionSemId: Types.ObjectId) => {
   return semesterYear + semCode + countPart;
 };
 
-export default { createStudentId };
+const createFacultyId=async()=>{
+  const lastCreatedFaculty=await FacultyModel.findOne().sort('-createdAt')
+  const lastCreatedFacultyId=lastCreatedFaculty?.id||'F-0000'
+  const nextFacultyIdNumberPart=Number(lastCreatedFacultyId.split('-')[1])+1
+  const nextFacultyId='F-'+nextFacultyIdNumberPart.toString().padStart(4,"0")
+  return nextFacultyId
+}
+
+export default { createStudentId,createFacultyId };

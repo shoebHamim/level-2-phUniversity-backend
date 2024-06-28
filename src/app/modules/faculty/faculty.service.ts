@@ -2,11 +2,22 @@ import { FacultyModel } from "./faculty.Model";
 import { TFaculty } from "./faculty.interface";
 
 
-const createFacultyIntoDB=async(payload:TFaculty)=>{
-  return await FacultyModel.create(payload)
+
+const getAllFacultyFromDB=async()=>{
+  return await FacultyModel.find()
+}
+
+const getSingleFacultyByIdFromDB=async(id:string)=>{
+  return await FacultyModel.find({id})
 }
 
 
+
+
+
 export default  {
-  createFacultyIntoDB
+  getAllFacultyFromDB,
+  getSingleFacultyByIdFromDB
+
+  
 }
